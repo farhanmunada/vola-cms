@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Website CMS | Dashboard</title>
+    <title>Vola Dev</title>
 </head>
 
 <body>
@@ -12,7 +12,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1><b>Data Pengguna</b> <small>Pengguna website</small></h1>
+                        <h1><b>Tambah Data Pengguna</b> <small>Pengguna website</small></h1>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->

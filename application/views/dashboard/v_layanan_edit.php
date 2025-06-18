@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit Artikel</title>
-</head>
-
-<body>
-    <div class="content-wrapper">
+<div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1><b>Data Artikel</b></h1>
+                    <h1><b>Edit Layanan</b></h1>
                 </div>
             </div>
         </div>
@@ -22,33 +13,36 @@
     <section class="content">
         <div class="row">
             <div class="col-lg-12">
-                <a href="<?php echo base_url('dashboard/artikel'); ?>">
+                <a href="<?php echo base_url('dashboard/layanan'); ?>">
                     <button class="btn btn-sm btn-success">Kembali</button>
                 </a>
                 <br><br>
+
                 <div class="card card-outline card-info">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <i class="fas fa-file"></i> Data Artikel <small>Edit Artikel</small>
+                            <i class="fas fa-concierge-bell"></i> Data Layanan <small>Edit Layanan</small>
                         </h3>
                     </div>
+
                     <div class="card-body">
-                        <?php foreach ($artikel as $a) { ?>
-                        <form method="post" action="<?php echo base_url('dashboard/artikel_update'); ?>" enctype="multipart/form-data">
+                        <?php foreach ($layanan as $l) { ?>
+                        <form method="post" action="<?php echo base_url('dashboard/layanan_update'); ?>" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-lg-9">
+                                    <input type="hidden" name="id" value="<?php echo $l->layanan_id; ?>">
+
                                     <div class="form-group">
-                                        <label>Judul Artikel</label>
-                                        <input type="hidden" name="id" value="<?php echo $a->artikel_id; ?>">
-                                        <input type="text" name="judul" class="form-control" placeholder="Masukan Judul Artikel . . ." value="<?php echo $a->artikel_judul; ?>">
+                                        <label>Judul Layanan</label>
+                                        <input type="text" name="judul" class="form-control" placeholder="Masukan Judul Layanan..." value="<?php echo $l->layanan_judul; ?>">
                                         <br>
                                         <?php echo form_error('judul'); ?>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Konten Artikel</label>
+                                        <label>Deskripsi Layanan</label>
                                         <?php echo form_error('konten'); ?>
-                                        <textarea class="form-control" name="konten" id="summernote"><?php echo $a->artikel_konten; ?></textarea>
+                                        <textarea class="form-control" name="konten" id="summernote"><?php echo $l->layanan_deskripsi; ?></textarea>
                                     </div>
                                 </div>
 
@@ -58,7 +52,7 @@
                                         <select class="form-control" name="kategori">
                                             <option value="">-- Pilih Kategori --</option>
                                             <?php foreach ($kategori as $k) { ?>
-                                                <option value="<?php echo $k->kategori_id; ?>" <?php if ($a->artikel_kategori == $k->kategori_id) echo "selected='selected'"; ?>>
+                                                <option <?php if ($l->layanan_kategori == $k->kategori_id) { echo "selected='selected'"; } ?> value="<?php echo $k->kategori_id; ?>">
                                                     <?php echo $k->kategori_nama; ?>
                                                 </option>
                                             <?php } ?>
@@ -70,12 +64,13 @@
                                     <div class="form-group">
                                         <label>Gambar</label>
                                         <input type="file" name="sampul" class="form-control">
+                                        <small class="text-muted">Gambar sekarang: <?php echo $l->layanan_gambar; ?></small>
                                         <br>
                                         <?php
-                                            if (isset($gambar_error)) {
-                                                echo $gambar_error;
-                                            }
-                                            echo form_error('sampul');
+                                        if (isset($gambar_error)) {
+                                            echo $gambar_error;
+                                        }
+                                        echo form_error('sampul');
                                         ?>
                                     </div>
 
@@ -87,12 +82,9 @@
                             </div>
                         </form>
                         <?php } ?>
-                    </div>
-                </div>
+                    </div><!-- /.card-body -->
+                </div><!-- /.card -->
             </div>
         </div>
     </section>
 </div>
-
-</body>
-</html>

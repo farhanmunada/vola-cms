@@ -3,49 +3,47 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tambah Kategori</title>
+    <title>Tambah Kategori Layanan</title>
 </head>
 
 <body>
     <div class="content-wrapper">
-    <!-- Content Header -->
+        <!-- Content Header -->
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>
-                            <b>Tambah Kategori</b>
-                        </h1>
+                        <h1><b>Tambah Kategori Layanan</b></h1>
                     </div>
                 </div>
             </div>
         </section>
 
-    <!-- Main Content -->
+        <!-- Main Content -->
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 connectedSortable">
                     
-                    <!-- Tombol Kembali -->
-                        <a href="<?= base_url('dashboard/kategori'); ?>">
+                        <!-- Tombol Kembali -->
+                        <a href="<?= base_url('dashboard/kategori_layanan'); ?>">
                             <button class="btn btn-sm btn-success mb-3">Kembali</button>
                         </a>
 
-                    <!-- Form Tambah Kategori -->
+                        <!-- Form Tambah Kategori Layanan -->
                         <div class="card card-primary">
                             <div class="card-header">
                                 <h3 class="card-title">
-                                    <i class="fas fa-th"></i> Kategori Artikel
+                                    <i class="fas fa-th"></i> Kategori Layanan
                                     <small>Tambah Kategori Baru</small>
                                 </h3>
                             </div>
 
                             <div class="card-body">
-                                <form method="post" action="<?= base_url('dashboard/kategori_tambah_aksi'); ?>">
+                                <form method="post" action="<?= base_url('dashboard/kategori_layanan_tambah_aksi'); ?>">
                                     <div class="form-group">
                                         <label>Nama Kategori</label>
-                                        <input type="text" name="kategori" class="form-control" placeholder="Masukkan Nama Kategori..." required>
+                                        <input type="text" name="kategori" class="form-control" placeholder="Masukkan Nama Kategori Layanan..." required>
                                         <?= form_error('kategori'); ?>
                                     </div>
 
@@ -60,6 +58,5 @@
             </div>
         </section>
     </div>
-
 </body>
 </html>

@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html lang="en">
     <head>
     <meta charset="utf-8">
@@ -22,7 +22,7 @@
     <link href="<?php echo base_url();?>assets_frontend/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
 
     <!-- Main Stylesheet File -->
-    <link href="<?php echo base_url();?>assets_frontend/css/style.css" rel="stylesheet">
+    <link href="<?php echo base_url();?>assets_frontend\css\style-green.css" rel="stylesheet">
     </head>
     <body id="page-top">
 
@@ -39,22 +39,22 @@
         <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
             <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link js-scroll active" href="<?php echo base_url();?>">Home</a>
+                <a class="nav-link js-scroll <?php echo ($this->uri->segment(1) == '' ? 'active' : ''); ?>" href="<?php echo base_url();?>">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll" href="<?php echo base_url('page/tentang-kami');?>">Tentang</a>
+                <a class="nav-link js-scroll <?php echo ($this->uri->segment(1) == 'page' && $this->uri->segment(2) == 'tentang-kami' ? 'active' : ''); ?>" href="<?php echo base_url('page/tentang-kami');?>">Tentang</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll" href="<?php echo base_url('page/layanan');?>">Layanan</a>
+                <a class="nav-link js-scroll <?php echo ($this->uri->segment(1) == 'layanan' ? 'active' : ''); ?>" href="<?php echo base_url('layanan'); ?>">Layanan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll" href="<?php echo base_url('page/kontak-kami');?>">Kontak</a>
+                <a class="nav-link js-scroll <?php echo ($this->uri->segment(1) == 'page' && $this->uri->segment(2) == 'kontak-kami' ? 'active' : ''); ?>" href="<?php echo base_url('page/kontak-kami');?>">Kontak</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll" href="<?php echo base_url('blog');?>">Blog</a>
+                <a class="nav-link js-scroll <?php echo ($this->uri->segment(1) == 'blog' ? 'active' : ''); ?>" href="<?php echo base_url('blog');?>">Blog</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll" href="<?php echo base_url('login');?>">Login</a>
+                <a class="nav-link js-scroll <?php echo ($this->uri->segment(1) == 'login' ? 'active' : ''); ?>" href="<?php echo base_url('login');?>">Login</a>
             </li>
             </ul>
         </div>

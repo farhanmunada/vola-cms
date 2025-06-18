@@ -15,7 +15,7 @@
         <div class="row mb-2">
             <div class="col-sm-6">
             <h1 class="m-0">
-                <b>Dashboard</b> <small>Control Panel</small>
+                <b>Dashboard</b>
             </h1>
             </div><!-- /.col -->
         </div><!-- /.row -->

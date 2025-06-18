@@ -46,6 +46,7 @@ class Dashboard extends CI_Controller {
         $this->load->view('dashboard/v_ganti_password');
         $this->load->view('dashboard/v_footer');
     }
+
     public function ganti_password_aksi()
     {
         // Set form validation
@@ -89,7 +90,7 @@ class Dashboard extends CI_Controller {
         }
     }
 
-    //fitur mengelola kategori
+    // kategori artikel
     public function kategori(){
         $data ['kategori'] = $this->m_data->get_data('kategori')->result();
         $this->load->view('dashboard/v_header');
@@ -97,12 +98,14 @@ class Dashboard extends CI_Controller {
         $this->load->view('dashboard/v_footer');
     }
 
+    // fitur tambah kategori artikel
     public function kategori_tambah(){
         $this->load->view('dashboard/v_header');
         $this->load->view('dashboard/v_kategori_tambah');
         $this->load->view('dashboard/v_footer');
     }
 
+    // aksi tambah kategori artikel
     public function kategori_tambah_aksi(){
         // Validasi form
         $this->form_validation->set_rules('kategori', 'Kategori', 'required');
@@ -130,7 +133,23 @@ class Dashboard extends CI_Controller {
         }
     }
 
-    // edit kategori
+    // Fitur mengelola artikel
+    public function artikel() {
+        $data['artikel'] = $this->db
+            ->query('
+                SELECT * FROM artikel
+                JOIN kategori ON artikel.artikel_kategori = kategori.kategori_id
+                JOIN pengguna ON artikel.artikel_author = pengguna.pengguna_id
+                ORDER BY artikel.artikel_id DESC
+            ')
+            ->result();
+
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_artikel', $data);
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // edit kategori artikel
     public function kategori_edit($id){
         $where = array(
             'kategori_id' => $id
@@ -142,7 +161,7 @@ class Dashboard extends CI_Controller {
         $this->load->view('dashboard/v_footer');
     }
 
-    // update kategori
+    // update kategori artikel
     public function kategori_update(){
         // Validasi form
         $this->form_validation->set_rules('kategori', 'Kategori', 'required');
@@ -178,29 +197,13 @@ class Dashboard extends CI_Controller {
         }
     }
 
-    // hapus kategori
+    // hapus kategori artikel
     public function kategori_hapus($id){
         $where = array(
             'kategori_id' => $id
         );
         $this->m_data->delete_data('kategori',$where);
         redirect (base_url().'dashboard/kategori');
-    }
-
-    // Fitur mengelola artikel
-    public function artikel() {
-        $data['artikel'] = $this->db
-            ->query('
-                SELECT * FROM artikel
-                JOIN kategori ON artikel.artikel_kategori = kategori.kategori_id
-                JOIN pengguna ON artikel.artikel_author = pengguna.pengguna_id
-                ORDER BY artikel.artikel_id DESC
-            ')
-            ->result();
-
-        $this->load->view('dashboard/v_header');
-        $this->load->view('dashboard/v_artikel', $data);
-        $this->load->view('dashboard/v_footer');
     }
 
     // Fitur tambah artikel
@@ -707,5 +710,264 @@ class Dashboard extends CI_Controller {
         redirect(base_url() . 'dashboard/pengguna');
     }
 
+    // kategori layanan
+    public function kategori_layanan(){
+        $data['kategori'] = $this->m_data->get_data('kategori_layanan')->result(); // Ambil dari tabel kategori_layanan
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_kategori_layanan', $data); // View baru khusus layanan
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // fitur tambah kategori layanan
+    public function kategori_layanan_tambah() {
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_kategori_layanan_tambah');
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // aksi tambah kategori layanan
+    public function kategori_layanan_tambah_aksi(){
+        $this->form_validation->set_rules('kategori', 'Kategori', 'required');
+
+        if ($this->form_validation->run() != false) {
+            $kategori = $this->input->post('kategori');
+
+            $data = [
+                'kategori_layanan_nama' => $kategori,
+                'kategori_layanan_slug' => strtolower(url_title($kategori))
+            ];
+
+            $this->m_data->insert_data('kategori_layanan', $data);
+
+            redirect(base_url('dashboard/kategori_layanan'));
+        } else {
+            $this->load->view('dashboard/v_header');
+            $this->load->view('dashboard/v_kategori_layanan_tambah');
+            $this->load->view('dashboard/v_footer');
+        }
+    }
+
+        // edit kategori layanan
+    public function kategori_layanan_edit($id) {
+        $where = ['kategori_layanan_id' => $id];
+        $data['kategori'] = $this->m_data->edit_data('kategori_layanan', $where)->result();
+
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_kategori_layanan_edit', $data);
+        $this->load->view('dashboard/v_footer');
+    }
+
+        // update kategori layanan
+    public function kategori_layanan_update(){
+        $this->form_validation->set_rules('kategori', 'Kategori', 'required');
+
+        if ($this->form_validation->run() != false) {
+            $id       = $this->input->post('id');
+            $kategori = $this->input->post('kategori');
+
+            $where = ['kategori_layanan_id' => $id];
+            $data  = [
+                'kategori_layanan_nama' => $kategori,
+                'kategori_layanan_slug' => strtolower(url_title($kategori))
+            ];
+
+            $this->m_data->update_data('kategori_layanan', $data, $where);
+
+            redirect(base_url('dashboard/kategori_layanan'));
+        } else {
+            $id    = $this->input->post('id');
+            $where = ['kategori_layanan_id' => $id];
+            $data['kategori'] = $this->m_data->edit_data('kategori_layanan', $where)->result();
+
+            $this->load->view('dashboard/v_header');
+            $this->load->view('dashboard/v_kategori_layanan_edit', $data);
+            $this->load->view('dashboard/v_footer');
+        }
+    }
+
+        // hapus kategori layanan
+    public function kategori_layanan_hapus($id) {
+        $where = ['kategori_layanan_id' => $id];
+        $this->m_data->delete_data('kategori_layanan', $where);
+        redirect(base_url('dashboard/kategori_layanan'));
+    }
+
+    // fitur mengelola layanan
+    public function layanan() {
+        $data['layanan'] = $this->db->query("
+            SELECT * FROM layanan 
+            JOIN kategori_layanan ON layanan_kategori = kategori_layanan_id 
+            JOIN pengguna ON layanan_author = pengguna_id 
+            ORDER BY layanan_id DESC
+        ")->result();
+
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_layanan', $data);
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // tambah layanan
+    public function layanan_tambah() {
+        $data['kategori_layanan'] = $this->m_data->get_data('kategori_layanan')->result();
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_layanan_tambah', $data);
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // aksi tambah layanan
+    public function layanan_aksi() {
+        // Validasi input wajib
+        $this->form_validation->set_rules('judul', 'Judul', 'required|is_unique[layanan.layanan_judul]');
+        $this->form_validation->set_rules('konten', 'Konten', 'required');
+        $this->form_validation->set_rules('kategori_layanan', 'Kategori Layanan', 'required');
+
+        // Validasi upload gambar
+        if (empty($_FILES['sampul']['name'])) {
+            $this->form_validation->set_rules('sampul', 'Gambar Sampul', 'required');
+        }
+
+        if ($this->form_validation->run() != false) {
+            $config['upload_path'] = './gambar/layanan/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg|webp';
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('sampul')) {
+                $gambar = $this->upload->data();
+                $tanggal = date('Y-m-d H:i:s');
+                $judul = $this->input->post('judul');
+                $slug = strtolower(url_title($judul));
+                $konten = $this->input->post('konten'); // ambil konten dari textarea
+                $sampul = $gambar['file_name'];
+                $author = $this->session->userdata('id');
+                $kategori = $this->input->post('kategori_layanan');
+                $status = $this->input->post('status');
+
+                $data = array(
+                    'layanan_tanggal' => $tanggal,
+                    'layanan_judul' => $judul,
+                    'layanan_slug' => $slug,
+                    'layanan_deskripsi' => $konten,
+                    'layanan_gambar' => $sampul,
+                    'layanan_author' => $author,
+                    'layanan_kategori' => $kategori,
+                    'layanan_status' => $status
+                );
+
+                $this->m_data->insert_data('layanan', $data);
+                redirect(base_url() . 'dashboard/layanan');
+            } else {
+                $data['gambar_error'] = $this->upload->display_errors();
+                $data['kategori'] = $this->m_data->get_data('kategori')->result();
+                $this->load->view('dashboard/v_header');
+                $this->load->view('dashboard/v_layanan_tambah', $data);
+                $this->load->view('dashboard/v_footer');
+            }
+        } else {
+            $data['kategori'] = $this->m_data->get_data('kategori')->result();
+            $this->load->view('dashboard/v_header');
+            $this->load->view('dashboard/v_layanan_tambah', $data);
+            $this->load->view('dashboard/v_footer');
+        }
+    }
+
+    // fitur edit layanan
+    public function layanan_edit($id) {
+        $where = array(
+            'layanan_id' => $id
+        );
+
+        $data['layanan'] = $this->m_data->edit_data('layanan', $where)->result();
+        $data['kategori'] = $this->m_data->get_data('kategori')->result();
+
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_layanan_edit', $data);
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // aksi update layanan
+    public function layanan_update(){
+        // Validasi wajib
+        $this->form_validation->set_rules('judul', 'Judul', 'required');
+        $this->form_validation->set_rules('konten', 'Konten', 'required');
+        $this->form_validation->set_rules('kategori', 'Kategori', 'required');
+
+        if ($this->form_validation->run() != false) {
+            $id = $this->input->post('id');
+            $judul = $this->input->post('judul');
+            $slug = strtolower(url_title($judul));
+            $konten = $this->input->post('konten');
+            $kategori = $this->input->post('kategori');
+            $status = $this->input->post('status');
+
+            $where = array(
+                'layanan_id' => $id
+            );
+
+            // Data utama tanpa gambar
+            $data = array(
+                'layanan_judul' => $judul,
+                'layanan_slug' => $slug,
+                'layanan_deskripsi' => $konten,
+                'layanan_kategori' => $kategori,
+                'layanan_status' => $status
+            );
+
+            // Update data layanan tanpa gambar dulu
+            $this->m_data->update_data('layanan', $data, $where);
+
+            // Cek jika ada file gambar baru diupload
+            if (!empty($_FILES['sampul']['name'])) {
+                $config['upload_path'] = './gambar/layanan/';
+                $config['allowed_types'] = 'gif|jpg|png|jpeg|webp';
+
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('sampul')) {
+                    $gambar = $this->upload->data();
+
+                    $data_gambar = array(
+                        'layanan_gambar' => $gambar['file_name']
+                    );
+
+                    $this->m_data->update_data('layanan', $data_gambar, $where);
+                    redirect(base_url() . 'dashboard/layanan');
+                } else {
+                    // Jika upload gagal, tampilkan error
+                    $this->form_validation->set_message('sampul', $data['gambar_error'] = $this->upload->display_errors());
+                    $data['layanan'] = $this->m_data->edit_data('layanan', $where)->result();
+                    $data['kategori_layanan'] = $this->m_data->get_data('kategori_layanan')->result();
+
+                    $this->load->view('dashboard/v_header');
+                    $this->load->view('dashboard/v_layanan_edit', $data);
+                    $this->load->view('dashboard/v_footer');
+                }
+            } else {
+                redirect(base_url() . 'dashboard/layanan');
+            }
+        } else {
+            // Jika validasi gagal
+            $id = $this->input->post('id');
+            $where = array(
+                'layanan_id' => $id
+            );
+
+            $data['layanan'] = $this->m_data->edit_data('layanan', $where)->result();
+            $data['kategori_layanan'] = $this->m_data->get_data('kategori_layanan')->result();
+
+            $this->load->view('dashboard/v_header');
+            $this->load->view('dashboard/v_layanan_edit', $data);
+            $this->load->view('dashboard/v_footer');
+        }
+    }
+
+    public function layanan_hapus($id){
+        $where = array(
+            'layanan_id' => $id
+        );
+
+        $this->m_data->delete_data('layanan', $where);
+        redirect(base_url() . 'dashboard/layanan');
+    }
 }
 ?>

@@ -1177,6 +1177,19 @@ footer .credits a {
   border-radius: .3rem;
 }
 
+.btn-outline-green {
+    color: #24b67e;
+    border-color: #24b67e;
+    background-color: transparent;
+    transition: all 0.2s;
+}
+.btn-outline-green:hover,
+.btn-outline-green:focus {
+    color: #fff;
+    background-color: #24b67e;
+    border-color: #24b67e;
+}
+
 @media (min-width: 577px) {
   .counter-box {
     margin-bottom: 1.8rem;

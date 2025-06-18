@@ -26,5 +26,29 @@
         function delete_data($table,$where) {
             return $this->db->delete($table,$where);
         }
+        function get_artikel_terbaru() {
+            $this->db->select('*');
+            $this->db->from('artikel');
+            $this->db->join('pengguna', 'artikel_author = pengguna_id');
+            $this->db->join('kategori', 'artikel_kategori = kategori_id');
+            $this->db->where('artikel_status', 'publish');
+            $this->db->order_by('artikel_id', 'DESC');
+            $this->db->limit(3);
+            return $this->db->get();
+        }
+
+        public function get_layanan($limit = null) {
+            $this->db->select('layanan.*, pengguna.pengguna_nama, kategori_layanan.kategori_layanan_nama as kategori_nama, kategori_layanan.kategori_layanan_slug as kategori_slug');
+            $this->db->from('layanan');
+            $this->db->join('pengguna', 'layanan.layanan_author = pengguna.pengguna_id');
+            $this->db->join('kategori_layanan', 'layanan.layanan_kategori = kategori_layanan.kategori_layanan_id');
+            $this->db->where('layanan.layanan_status', 'publish');
+            $this->db->order_by('layanan.layanan_id', 'DESC');
+            if ($limit !== null) {
+                $this->db->limit($limit);
+            }
+            return $this->db->get();
+        }
+
     }
 ?>

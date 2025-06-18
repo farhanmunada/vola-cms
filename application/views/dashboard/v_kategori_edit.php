@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Website CMS | Dashboard</title>
+    <title>Edit Kategori</title>
 </head>
 
 <body>
@@ -13,7 +13,7 @@
             <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                <h1><b>Data Kategori</b> <small>kategori artikel</small></h1>
+                <h1><b>Edit Kategori</b></h1>
                 </div>
             </div>
             </div>

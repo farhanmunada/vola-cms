@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Website CMS | Dashboard</title>
+    <title>Data Artikel</title>
 </head>
 
 <body>
@@ -13,7 +13,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1><b>Data Artikel</b> <small>manajemen artikel</small></h1>
+                        <h1><b>Data Artikel</b></h1>
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                     <div class="card card-outline card-info">
                         <div class="card-header">
                             <h3 class="card-title">
-                                <i class="fas fa-file"></i> Data Artikel <small>Tambah Artikel Baru</small>
+                                <i class="fas fa-file"></i> Data Artikel
                             </h3>
                         </div>
 
