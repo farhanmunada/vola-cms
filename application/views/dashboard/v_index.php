@@ -29,39 +29,75 @@
 
         <div class="row">
             <div class="col-lg-3 col-6">
-            <div class="small-box bg-info">
-                <div class="inner">
-                <h3><?php echo $jumlah_artikel; ?></h3>
-                <p>Jumlah Artikel</p>
-                </div>
-                <div class="icon">
-                <i class="ion ion-bag"></i>
-                </div>
-                <a href="<?php echo base_url('dashboard/artikel'); ?>" class="small-box-footer">
-                Selengkapnya <i class="fas fa-arrow-circle-right"></i>
-                </a>
-            </div><!-- /.small-box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                    <h3><?php echo $jumlah_artikel; ?></h3>
+                    <p>Jumlah Artikel</p>
+                    </div>
+                    <div class="icon">
+                    <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="<?php echo base_url('dashboard/artikel'); ?>" class="small-box-footer">
+                    Selengkapnya <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div><!-- /.small-box -->
             </div>
 
             <div class="col-lg-3 col-6">
-            <div class="small-box bg-success">
-                <div class="inner">
-                <h3><?php echo $jumlah_kategori; ?></h3>
-                <p>Jumlah Kategori</p>
-                </div>
-                <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-                </div>
-                <?php if($this->session->userdata('level') == 'penulis'): ?>
-                <a href="javascript:void(0);" class="small-box-footer disabled" style="pointer-events:none;opacity:0.6;cursor:not-allowed;">
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                    <h3><?php echo $jumlah_layanan; ?></h3>
+                    <p>Jumlah Layanan</p>
+                    </div>
+                    <div class="icon">
+                    <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="<?php echo base_url('dashboard/layanan'); ?>" class="small-box-footer">
                     Selengkapnya <i class="fas fa-arrow-circle-right"></i>
-                </a>
-                <?php else: ?>
-                <a href="<?php echo base_url('dashboard/kategori'); ?>" class="small-box-footer">
-                    Selengkapnya <i class="fas fa-arrow-circle-right"></i>
-                </a>
-                <?php endif; ?>
-            </div><!-- /.small-box -->
+                    </a>
+                </div><!-- /.small-box -->
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                    <h3><?php echo $jumlah_kategori; ?></h3>
+                    <p>Jumlah Kategori</p>
+                    </div>
+                    <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <?php if($this->session->userdata('level') == 'penulis'): ?>
+                    <a href="javascript:void(0);" class="small-box-footer disabled" style="pointer-events:none;opacity:0.6;cursor:not-allowed;">
+                        Selengkapnya <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                    <?php else: ?>
+                    <a href="<?php echo base_url('dashboard/kategori'); ?>" class="small-box-footer">
+                        Selengkapnya <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                    <?php endif; ?>
+                </div><!-- /.small-box -->
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-secondary">
+                    <div class="inner">
+                    <h3><?php echo $jumlah_kategori_layanan; ?></h3>
+                    <p>Jumlah Kategori Layanan</p>
+                    </div>
+                    <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <?php if($this->session->userdata('level') == 'penulis'): ?>
+                    <a href="javascript:void(0);" class="small-box-footer disabled" style="pointer-events:none;opacity:0.6;cursor:not-allowed;">
+                        Selengkapnya <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                    <?php else: ?>
+                    <a href="<?php echo base_url('dashboard/kategori_layanan'); ?>" class="small-box-footer">
+                        Selengkapnya <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                    <?php endif; ?>
+                </div><!-- /.small-box -->
             </div>
 
             <div class="col-lg-3 col-6">

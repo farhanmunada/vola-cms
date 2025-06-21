@@ -19,8 +19,14 @@ class Dashboard extends CI_Controller {
         // Hitung jumlah artikel
         $data['jumlah_artikel'] = $this->m_data->get_data('artikel')->num_rows();
 
+        // Hitung jumlah layanan
+        $data['jumlah_layanan'] = $this->m_data->get_data('layanan')->num_rows();
+
         // Hitung jumlah kategori
         $data['jumlah_kategori'] = $this->m_data->get_data('kategori')->num_rows();
+        
+        // Hitung jumlah kategori Layanan
+        $data['jumlah_kategori_layanan'] = $this->m_data->get_data('kategori_layanan')->num_rows();
 
         // Hitung jumlah pengguna
         $data['jumlah_pengguna'] = $this->m_data->get_data('pengguna')->num_rows();
