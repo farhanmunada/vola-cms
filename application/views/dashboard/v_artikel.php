@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Artikel</title>
-</head>
-
-<body>
     <div class="content-wrapper">
         <section class="content-header">
             <div class="container-fluid">
@@ -128,6 +119,3 @@
             </div><!-- /.container-fluid -->
         </section><!-- /.content -->
     </div><!-- /.content-wrapper -->
-
-</body>
-</html>

@@ -50,5 +50,14 @@
             return $this->db->get();
         }
 
+        public function get_portfolio_terbaru() {
+            $this->db->select('portfolio.*, kategori_portfolio.kategori_portfolio_nama');
+            $this->db->from('portfolio');
+            $this->db->join('kategori_portfolio', 'portfolio.portfolio_kategori = kategori_portfolio.kategori_portfolio_id');
+            $this->db->where('portfolio_status', 'publish');
+            $this->db->order_by('portfolio_id', 'DESC');
+            $this->db->limit(6);
+            return $this->db->get();
+        }
     }
 ?>

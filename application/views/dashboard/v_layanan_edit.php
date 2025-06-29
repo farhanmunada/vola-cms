@@ -51,11 +51,11 @@
                                         <label>Kategori</label>
                                         <select class="form-control" name="kategori">
                                             <option value="">-- Pilih Kategori --</option>
-                                            <?php foreach ($kategori as $k) { ?>
-                                                <option <?php if ($l->layanan_kategori == $k->kategori_id) { echo "selected='selected'"; } ?> value="<?php echo $k->kategori_id; ?>">
-                                                    <?php echo $k->kategori_nama; ?>
-                                                </option>
-                                            <?php } ?>
+                                                <?php foreach ($kategori_layanan as $k) { ?>
+                                                    <option <?php if ($l->layanan_kategori == $k->kategori_layanan_id) { echo "selected='selected'"; } ?> value="<?php echo $k->kategori_layanan_id; ?>">
+                                                        <?php echo $k->kategori_layanan_nama; ?>
+                                                    </option>
+                                                <?php } ?>
                                         </select>
                                         <br>
                                         <?php echo form_error('kategori'); ?>

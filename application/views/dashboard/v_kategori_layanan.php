@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Kategori Layanan</title>
-</head>
-
-<body>
     <div class="content-wrapper">
         <!-- Content Header -->
         <section class="content-header">
@@ -74,5 +65,4 @@
             </div> <!-- /.container-fluid -->
         </section>
     </div>
-</body>
-</html>
+

@@ -22,17 +22,26 @@ class Dashboard extends CI_Controller {
         // Hitung jumlah layanan
         $data['jumlah_layanan'] = $this->m_data->get_data('layanan')->num_rows();
 
+        // Hitung jumlah portfolio
+        $data['jumlah_portfolio'] = $this->m_data->get_data('portfolio')->num_rows();
+
         // Hitung jumlah kategori
         $data['jumlah_kategori'] = $this->m_data->get_data('kategori')->num_rows();
         
         // Hitung jumlah kategori Layanan
         $data['jumlah_kategori_layanan'] = $this->m_data->get_data('kategori_layanan')->num_rows();
 
+        // Hitung jumlah kategori Portfolio
+        $data['jumlah_kategori_portfolio'] = $this->m_data->get_data('kategori_portfolio')->num_rows();
+
         // Hitung jumlah pengguna
         $data['jumlah_pengguna'] = $this->m_data->get_data('pengguna')->num_rows();
 
-        // Hitung jumlah halaman
-        $data['jumlah_halaman'] = $this->m_data->get_data('halaman')->num_rows();
+        // Hitung jumlah Testimonial
+        $data['jumlah_testimonial'] = $this->m_data->get_data('testimonials')->num_rows();
+
+        // Hitung jumlah Pesan
+        $data['jumlah_kontak'] = $this->m_data->get_data('kontak')->num_rows();
 
         // Load view dengan data
         $this->load->view('dashboard/v_header');
@@ -437,6 +446,34 @@ class Dashboard extends CI_Controller {
         $this->load->view('dashboard/v_header');
         $this->load->view('dashboard/v_pages_edit',$data);
         $this->load->view('dashboard/v_footer');
+    }
+
+    // Fitur update halaman
+    public function pages_update() {
+        // Validasi input
+        $this->form_validation->set_rules('judul', 'Judul', 'required');
+        $this->form_validation->set_rules('konten', 'Konten', 'required');
+
+        if ($this->form_validation->run() !== false) {
+            $id     = $this->input->post('id');
+            $judul  = $this->input->post('judul');
+            $slug   = strtolower(url_title($judul));
+            $konten = $this->input->post('konten');
+
+            $where = array('halaman_id' => $id);
+            $data  = array(
+                'halaman_judul'  => $judul,
+                'halaman_slug'   => $slug,
+                'halaman_konten' => $konten
+            );
+
+            $this->m_data->update_data('halaman', $data, $where);
+            redirect(base_url('dashboard/pages'));
+        } else {
+            // Bisa arahkan ulang ke form edit jika validasi gagal
+            $id = $this->input->post('id');
+            $this->pages_edit($id);
+        }
     }
 
     // fitur hapus halaman
@@ -884,7 +921,7 @@ class Dashboard extends CI_Controller {
         );
 
         $data['layanan'] = $this->m_data->edit_data('layanan', $where)->result();
-        $data['kategori'] = $this->m_data->get_data('kategori')->result();
+        $data['kategori_layanan'] = $this->m_data->get_data('kategori_layanan')->result();
 
         $this->load->view('dashboard/v_header');
         $this->load->view('dashboard/v_layanan_edit', $data);
@@ -974,6 +1011,430 @@ class Dashboard extends CI_Controller {
 
         $this->m_data->delete_data('layanan', $where);
         redirect(base_url() . 'dashboard/layanan');
+    }
+
+    // Portfolio
+    public function kategori_portfolio(){
+        $data['kategori'] = $this->m_data->get_data('kategori_portfolio')->result();
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_kategori_portfolio', $data);
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // Fitur tambah kategori portfolio
+    public function kategori_portfolio_tambah() {
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_kategori_portfolio_tambah');
+        $this->load->view('dashboard/v_footer');
+    }
+
+    public function kategori_portfolio_tambah_aksi(){
+        $this->form_validation->set_rules('kategori', 'Kategori', 'required');
+
+        if ($this->form_validation->run() != false) {
+            $kategori = $this->input->post('kategori');
+
+            $data = [
+                'kategori_portfolio_nama' => $kategori,
+                'kategori_portfolio_slug' => strtolower(url_title($kategori))
+            ];
+
+            $this->m_data->insert_data('kategori_portfolio', $data);
+
+            redirect(base_url('dashboard/kategori_portfolio'));
+        } else {
+            $this->load->view('dashboard/v_header');
+            $this->load->view('dashboard/v_kategori_portfolio_tambah');
+            $this->load->view('dashboard/v_footer');
+        }
+    }
+
+    // Fitur edit kategori portfolio
+    public function kategori_portfolio_edit($id) {
+        $where = ['kategori_portfolio_id' => $id];
+        $data['kategori'] = $this->m_data->edit_data('kategori_portfolio', $where)->result();
+
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_kategori_portfolio_edit', $data);
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // Fitur update kategori portfolio
+    public function kategori_portfolio_update(){
+        $this->form_validation->set_rules('kategori', 'Kategori', 'required');
+
+        if ($this->form_validation->run() != false) {
+            $id       = $this->input->post('id');
+            $kategori = $this->input->post('kategori');
+
+            $where = ['kategori_portfolio_id' => $id];
+            $data  = [
+                'kategori_portfolio_nama' => $kategori,
+                'kategori_portfolio_slug' => strtolower(url_title($kategori))
+            ];
+
+            $this->m_data->update_data('kategori_portfolio', $data, $where);
+
+            redirect(base_url('dashboard/kategori_portfolio'));
+        } else {
+            $id    = $this->input->post('id');
+            $where = ['kategori_portfolio_id' => $id];
+            $data['kategori'] = $this->m_data->edit_data('kategori_portfolio', $where)->result();
+
+            $this->load->view('dashboard/v_header');
+            $this->load->view('dashboard/v_kategori_portfolio_edit', $data);
+            $this->load->view('dashboard/v_footer');
+        }
+    }
+
+    // Fitur hapus kategori portfolio
+    public function kategori_portfolio_hapus($id) {
+        $where = ['kategori_portfolio_id' => $id];
+        $this->m_data->delete_data('kategori_portfolio', $where);
+        redirect(base_url('dashboard/kategori_portfolio'));
+    }
+
+    // Fitur mengelola portfolio
+    public function portfolio() {
+        $data['portfolio'] = $this->db->query("
+            SELECT * FROM portfolio 
+            JOIN kategori_portfolio ON portfolio_kategori = kategori_portfolio_id 
+            JOIN pengguna ON portfolio_author = pengguna_id 
+            ORDER BY portfolio_id DESC
+        ")->result();
+
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_portfolio', $data);
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // Fitur tambah portfolio
+    public function portfolio_tambah() {
+        $data['kategori_portfolio'] = $this->m_data->get_data('kategori_portfolio')->result();
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_portfolio_tambah', $data);
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // aksi tambah portfolio
+    public function portfolio_aksi() {
+        // Validasi input wajib
+        $this->form_validation->set_rules('judul', 'Judul', 'required|is_unique[portfolio.portfolio_judul]');
+        $this->form_validation->set_rules('konten', 'Konten', 'required');
+        $this->form_validation->set_rules('kategori_portfolio', 'Kategori Portfolio', 'required');
+
+        // Validasi upload gambar
+        if (empty($_FILES['sampul']['name'])) {
+            $this->form_validation->set_rules('sampul', 'Gambar Sampul', 'required');
+        }
+
+        if ($this->form_validation->run() != false) {
+            $config['upload_path'] = './gambar/portfolio/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg|webp';
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('sampul')) {
+                $gambar = $this->upload->data();
+                $tanggal = date('Y-m-d H:i:s');
+                $judul = $this->input->post('judul');
+                $slug = strtolower(url_title($judul));
+                $konten = $this->input->post('konten'); // ambil konten dari textarea
+                $sampul = $gambar['file_name'];
+                $author = $this->session->userdata('id');
+                $kategori = $this->input->post('kategori_portfolio');
+                $status = $this->input->post('status');
+
+                $data = array(
+                    'portfolio_tanggal' => $tanggal,
+                    'portfolio_judul' => $judul,
+                    'portfolio_slug' => $slug,
+                    'portfolio_deskripsi' => $konten,
+                    'portfolio_gambar' => $sampul,
+                    'portfolio_author' => $author,
+                    'portfolio_kategori' => $kategori,
+                    'portfolio_status' => $status
+                );
+
+                $this->m_data->insert_data('portfolio', $data);
+                redirect(base_url() . 'dashboard/portfolio');
+            } else {
+                $data['gambar_error'] = $this->upload->display_errors();
+                $data['kategori'] = $this->m_data->get_data('kategori')->result();
+                $this->load->view('dashboard/v_header');
+                $this->load->view('dashboard/v_portfolio_tambah', $data);
+                $this->load->view('dashboard/v_footer');
+            }
+        } else {
+            $data['kategori'] = $this->m_data->get_data('kategori')->result();
+            $this->load->view('dashboard/v_header');
+            $this->load->view('dashboard/v_portfolio_tambah', $data);
+            $this->load->view('dashboard/v_footer');
+        }
+    }
+
+    // fitur edit Portfolio
+    public function portfolio_edit($id) {
+        $where = array('portfolio_id' => $id);
+
+        $data['portfolio'] = $this->m_data->edit_data('portfolio', $where)->result();
+        $data['kategori_portfolio'] = $this->m_data->get_data('kategori_portfolio')->result();
+
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_portfolio_edit', $data);
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // aksi update Portfolio
+    public function portfolio_update() {
+        // Validasi input
+        $this->form_validation->set_rules('judul', 'Judul', 'required');
+        $this->form_validation->set_rules('konten', 'Konten', 'required');
+        $this->form_validation->set_rules('kategori', 'Kategori', 'required');
+
+        if ($this->form_validation->run() != false) {
+            $id = $this->input->post('id');
+            $judul = $this->input->post('judul');
+            $slug = strtolower(url_title($judul));
+            $konten = $this->input->post('konten');
+            $kategori = $this->input->post('kategori');
+            $status = $this->input->post('status');
+
+            $where = ['portfolio_id' => $id];
+
+            // Data tanpa gambar
+            $data = [
+                'portfolio_judul' => $judul,
+                'portfolio_slug' => $slug,
+                'portfolio_deskripsi' => $konten,
+                'portfolio_kategori' => $kategori,
+                'portfolio_status' => $status
+            ];
+
+            // Update data portfolio
+            $this->m_data->update_data('portfolio', $data, $where);
+
+            // Jika upload gambar baru
+            if (!empty($_FILES['sampul']['name'])) {
+                $config['upload_path'] = './gambar/portfolio/';
+                $config['allowed_types'] = 'gif|jpg|png|jpeg|webp';
+
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('sampul')) {
+                    $gambar = $this->upload->data();
+
+                    $data_gambar = [
+                        'portfolio_gambar' => $gambar['file_name']
+                    ];
+
+                    $this->m_data->update_data('portfolio', $data_gambar, $where);
+                    redirect(base_url('dashboard/portfolio'));
+                } else {
+                    // Jika upload gagal
+                    $data['gambar_error'] = $this->upload->display_errors();
+                    $data['portfolio'] = $this->m_data->edit_data('portfolio', $where)->result();
+                    $data['kategori_portfolio'] = $this->m_data->get_data('kategori_portfolio')->result();
+
+                    $this->load->view('dashboard/v_header');
+                    $this->load->view('dashboard/v_portfolio_edit', $data);
+                    $this->load->view('dashboard/v_footer');
+                }
+            } else {
+                redirect(base_url('dashboard/portfolio'));
+            }
+        } else {
+            // Jika validasi gagal
+            $id = $this->input->post('id');
+            $where = ['portfolio_id' => $id];
+
+            $data['portfolio'] = $this->m_data->edit_data('portfolio', $where)->result();
+            $data['kategori_portfolio'] = $this->m_data->get_data('kategori_portfolio')->result();
+
+            $this->load->view('dashboard/v_header');
+            $this->load->view('dashboard/v_portfolio_edit', $data);
+            $this->load->view('dashboard/v_footer');
+        }
+    }
+
+    // Fitur hapus Portfolio
+    public function portfolio_hapus($id){
+        $where = array(
+            'portfolio_id' => $id
+        );
+
+        $this->m_data->delete_data('portfolio', $where);
+        redirect(base_url() . 'dashboard/portfolio');
+    }
+
+    // === TAMPIL TESTIMONIAL ===
+    function testimonial() {
+        $data['testimonial'] = $this->m_data->get_data('testimonials')->result();
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_testimonial', $data);
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // === TAMBAH TESTIMONIAL ===
+    function testimonial_tambah() {
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_testimonial_tambah');
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // === SIMPAN TESTIMONIAL ===
+    function testimonial_simpan() {
+        $config['upload_path'] = './gambar/testimoni/';
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['max_size'] = 2048;
+
+        $this->load->library('upload', $config);
+        $gambar = '';
+        if ($this->upload->do_upload('gambar')) {
+            $gambar = $this->upload->data('file_name');
+        }
+
+        $data = [
+            'nama' => $this->input->post('nama'),
+            'deskripsi' => $this->input->post('deskripsi'),
+            'gambar' => $gambar,
+            'rating' => $this->input->post('rating')
+        ];
+
+        $this->m_data->insert_data('testimonials', $data);
+        redirect('dashboard/testimonial');
+    }
+
+    // === FORM EDIT TESTIMONIAL ===
+    function testimonial_edit($id) {
+        $where = ['id' => $id];
+        $data['t'] = $this->m_data->edit_data('testimonials', $where)->row();
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_testimonial_edit', $data);
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // === UPDATE TESTIMONIAL ===
+    function testimonial_update() {
+        $id = $this->input->post('id');
+        $where = ['id' => $id];
+
+        $data = [
+            'nama' => $this->input->post('nama'),
+            'deskripsi' => $this->input->post('deskripsi'),
+            'rating' => $this->input->post('rating')
+        ];
+
+        if (!empty($_FILES['gambar']['name'])) {
+            $config['upload_path'] = './gambar/testimoni/';
+            $config['allowed_types'] = 'jpg|jpeg|png';
+            $config['max_size'] = 2048;
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('gambar')) {
+                $data['gambar'] = $this->upload->data('file_name');
+            }
+        }
+
+        $this->m_data->update_data('testimonials', $data, $where);
+        redirect('dashboard/testimonial');
+    }
+
+    // === HAPUS TESTIMONIAL ===
+    function testimonial_hapus($id) {
+        $where = ['id' => $id];
+        $this->m_data->delete_data('testimonials', $where);
+        redirect('dashboard/testimonial');
+    }
+
+    // Menampilkan halaman counter
+    public function counter()
+    {
+        $data['counter'] = $this->m_data->get_data('counter_statistik')->result();
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_counter', $data);
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // Update data counter
+    public function update_counter()
+    {
+        $id = $this->input->post('id');
+        $label = $this->input->post('label');
+
+        $data = [
+            'icon' => $this->input->post('icon'),
+            'number' => $this->input->post('number'),
+            // 'label' => $this->input->post('label'), // aktifkan jika ingin edit label
+        ];
+        $this->m_data->update_data('counter_statistik', $data, ['id' => $id]);
+        $this->session->set_flashdata('update_success', "Update data <b>$label</b> berhasil.");
+        redirect('dashboard/counter');
+    }
+
+    // Menampilkan halaman kontak
+    public function kontak()
+    {
+        $data['kontak'] = $this->m_data->get_data('kontak')->result();
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_kontak', $data);
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // Logo
+    public function client_logo() {
+        $data['client_logo'] = $this->m_data->get_data('client_logo')->result();
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_client_logo', $data);
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // Tambah Logo
+    public function client_logo_tambah() {
+        $this->load->view('dashboard/v_header');
+        $this->load->view('dashboard/v_client_logo_tambah');
+        $this->load->view('dashboard/v_footer');
+    }
+
+    // Simpan Logo
+    public function client_logo_aksi() {
+        $nama = $this->input->post('nama');
+        
+        // Proses upload gambar
+        $config['upload_path'] = './gambar/client/';
+        $config['allowed_types'] = 'jpg|png|jpeg|svg';
+        $config['file_name'] = time().'_'.$_FILES['gambar']['name'];
+
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload('gambar')) {
+            $upload_data = $this->upload->data();
+            $data = [
+                'nama' => $nama,
+                'gambar' => $upload_data['file_name']
+            ];
+
+            $this->m_data->insert_data('client_logo', $data);
+            $this->session->set_flashdata('success', 'Logo client berhasil ditambahkan');
+            redirect('dashboard/client_logo');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal upload gambar: '.$this->upload->display_errors());
+            redirect('dashboard/client_logo_tambah');
+        }
+    }
+
+    // Hapus Logo 
+    public function client_logo_hapus($id) {
+        $logo = $this->m_data->edit_data('client_logo', ['id' => $id])->row();
+
+        // Hapus file fisik jika ada
+        if ($logo->gambar && file_exists('./gambar/client/' . $logo->gambar)) {
+            unlink('./gambar/client/' . $logo->gambar);
+        }
+
+        $this->m_data->delete_data('client_logo', ['id' => $id]);
+        $this->session->set_flashdata('success', 'Logo client berhasil dihapus');
+        redirect('dashboard/client_logo');
     }
 }
 ?>

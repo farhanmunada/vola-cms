@@ -1,5 +1,5 @@
 <!--/ Section Contact-Footer Start /-->
-<section class="paralax-mf footer-paralax bg-image sect-mt4 route" style="background-image: url(<?php echo base_url();?>assets_frontend/img/overlay-bg.jpg)">
+<section class="paralax-mf footer-paralax bg-image sect-mt4 route" style="background-image: url(<?php echo base_url();?>assets_frontend/img/hero3.jpg)">
     <div class="overlay-mf"></div>
     <footer>
         <div class="container">

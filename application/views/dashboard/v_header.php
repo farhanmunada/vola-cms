@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Vola Dev</title>
+
+    <link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets_frontend/img/favicon1.png">
+    <title>CMS Vola</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
@@ -64,8 +66,8 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
-            <img src="<?php echo base_url(); ?>assets/dist/img/AdminLTELogo.png" alt="website CMS" class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">WEBSITE CMS</span>
+            <img src="<?php echo base_url(); ?>assets_frontend/img/favicon1.png" alt="Vola" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">Vola CMS</span>
         </a>
 
         <!-- Sidebar -->
@@ -99,8 +101,19 @@
                 <?php if ($this->session->userdata('level') == "admin") { ?>
                 <!-- Menu Kategori -->
                 <li class="nav-item">
+                    <a href="<?php echo base_url().'dashboard/counter' ?>" class="nav-link">
+                        <i class="nav-icon fas fa-clock"></i>
+                        <p>COUNTER</p> 
+                    </a>
+                </li>
+                <?php } ?>
+
+                <?php if ($this->session->userdata('level') == "admin") { ?>
+                <!-- Menu Kategori -->
+                <li class="nav-item">
                     <a href="<?php echo base_url().'dashboard/kategori' ?>" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i> <p>KATEGORI</p> 
+                        <i class="nav-icon fas fa-newspaper"></i>
+                        <p>KATEGORI ARTIKEL</p> 
                     </a>
                 </li>
                 <?php } ?>
@@ -108,7 +121,8 @@
                 <!-- Menu Artikel -->
                 <li class="nav-item">
                     <a href="<?php echo base_url().'dashboard/artikel' ?>" class="nav-link">
-                        <i class="nav-icon fas fa-file"></i> <p>ARTIKEL</p> 
+                        <i class="nav-icon fas fa-newspaper"></i>
+                        <p>ARTIKEL</p> 
                     </a>
                 </li>
 
@@ -116,16 +130,64 @@
                 <!-- Menu Kategori -->
                 <li class="nav-item">
                     <a href="<?php echo base_url().'dashboard/kategori_layanan' ?>" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i> <p>KATEGORI LAYANAN</p> 
+                        <i class="nav-icon fas fa-check"></i>
+                        <p>KATEGORI LAYANAN</p> 
                     </a>
                 </li>
                 <?php } ?>
 
                 <li class="nav-item">
                     <a href="<?php echo base_url().'dashboard/layanan' ?>" class="nav-link">
-                        <i class="nav-icon fas fa-folder-open"></i> <p>LAYANAN</p> 
+                        <i class="nav-icon fas fa-check"></i>
+                        <p>LAYANAN</p> 
                     </a>
                 </li>
+
+                <?php if ($this->session->userdata('level') == "admin") { ?>
+                <!-- Menu Kategori -->
+                <li class="nav-item">
+                    <a href="<?php echo base_url().'dashboard/kategori_portfolio' ?>" class="nav-link">
+                        <i class="nav-icon fas fa-clipboard"></i>
+                        <p>KATEGORI PORTFOLIO</p> 
+                    </a>
+                </li>
+                <?php } ?>
+
+                <li class="nav-item">
+                    <a href="<?php echo base_url().'dashboard/portfolio' ?>" class="nav-link">
+                        <i class="nav-icon fas fa-clipboard"></i>
+                        <p>PORTFOLIO</p> 
+                    </a>
+                </li>
+
+                <?php if ($this->session->userdata('level') == "admin") { ?>
+                <!-- Menu Kategori -->
+                <li class="nav-item">
+                    <a href="<?php echo base_url().'dashboard/testimonial' ?>" class="nav-link">
+                        <i class="nav-icon fas fa-star"></i>
+                        <p>TESTIMONIAL</p> 
+                    </a>
+                </li>
+                <?php } ?>
+
+                <?php if ($this->session->userdata('level') == "admin") { ?>
+                <!-- Menu Kategori -->
+                <li class="nav-item">
+                    <a href="<?php echo base_url().'dashboard/kontak' ?>" class="nav-link">
+                        <i class="nav-icon fas fa-comment"></i>
+                        <p>KONTAK</p> 
+                    </a>
+                </li>
+                <?php } ?>
+
+                <?php if ($this->session->userdata('level') == "admin") { ?>
+                <!-- Menu Kategori -->
+                <li class="nav-item">
+                    <a href="<?php echo base_url().'dashboard/client_logo' ?>" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i> <p>CLIENT LOGO</p> 
+                    </a>
+                </li>
+                <?php } ?>
 
                 <?php if ($this->session->userdata('level') == "admin") { ?>
                 <!-- Menu Pages -->
@@ -134,12 +196,14 @@
                     <i class="nav-icon fas fa-copy"></i> <p>PAGES</p>
                 </a>
                 </li>
+
                 <!-- Menu Pengguna -->
                 <li class="nav-item">
                     <a href="<?php echo base_url().'dashboard/pengguna' ?>" class="nav-link">
                         <i class="nav-icon fas fa-users"></i> <p>PENGGUNA</p>
                     </a>
                 </li>
+
                 <!-- Menu Pengaturan Website -->
                 <li class="nav-item">
                     <a href="<?php echo base_url().'dashboard/pengaturan' ?>" class="nav-link">

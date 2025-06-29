@@ -27,8 +27,37 @@ $route['search/(:any)'] = 'welcome/search/$1';
 $route['search/(:any)/(:num)'] = 'welcome/search/$1/$2';
 
 // ----------------------------
+// Route PORTFOLIO
+$route['portfolio'] = 'welcome/portfolio';
+$route['portfolio/(:num)'] = 'welcome/portfolio/$1';
+$route['portfolio/kategori/(:any)'] = 'welcome/kategori_portfolio/$1';
+$route['portfolio/kategori/(:any)/(:num)'] = 'welcome/kategori_portfolio/$1/$2';
+$route['portfolio/search'] = 'welcome/search_portfolio';
+$route['portfolio/search/(:any)'] = 'welcome/search_portfolio/$1';
+
+$route['portfolio/(:any)'] = 'welcome/portfolio_single/$1';
+
+// ----------------------------
 // Route PAGE
 $route['page/(:any)'] = 'welcome/page/$1';
+
+// ----------------------------
+// Route TESTIMONIAL
+$route['testimonial'] = 'welcome/testimonial';
+
+// ----------------------------
+// Route KONTAK
+$route['kontak'] = 'welcome/kontak';
+$route['kirim-pesan'] = 'welcome/kirim_pesan';
+$route['dashboard/kontak'] = 'dashboard/kontak';
+
+// ----------------------------
+// Route Client Logo
+$route['dashboard/client_logo'] = 'dashboard/client_logo';
+$route['dashboard/client_logo_tambah'] = 'dashboard/client_logo_tambah';
+$route['dashboard/client_logo_aksi'] = 'dashboard/client_logo_aksi';
+$route['dashboard/client_logo_hapus/(:num)'] = 'dashboard/client_logo_hapus/$1';
+
 
 // ----------------------------
 // 404 dan default lainnya

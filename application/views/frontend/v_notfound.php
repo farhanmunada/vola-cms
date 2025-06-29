@@ -1,4 +1,4 @@
-    <div class="intro intro-single route bg-image" style="background-image: url(<?php echo base_url();?>assets_frontend/img/counters-bg.jpg)">
+    <div class="intro intro-single route bg-image" style="background-image: url(<?php echo base_url();?>assets_frontend/img/hero3.jpg)">
     <div class="overlay-bg"></div>
     <div class="intro-content display-table">
         <div class="table-cell">
